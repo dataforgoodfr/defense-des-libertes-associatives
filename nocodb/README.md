@@ -5,7 +5,8 @@ Back-office de saisie et de qualification des cas, déployé sur Clever Cloud
 
 - `Dockerfile` : image officielle NocoDB, version épinglée.
 - `start-clever.sh` : construit `NC_DB` à partir des variables `POSTGRESQL_ADDON_*`
-  injectées par Clever Cloud, puis lance NocoDB.
+  injectées par Clever Cloud (mot de passe encodé), puis lance NocoDB. S'arrête en
+  erreur si aucune base n'est configurée, plutôt que de démarrer sur SQLite.
 - `.env.example` : les variables à définir sur l'app.
 - `docker-compose.yaml` : test local contre un PostgreSQL 18.
 

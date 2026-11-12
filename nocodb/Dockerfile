@@ -3,4 +3,4 @@ FROM nocodb/nocodb:2026.10.1
 
 COPY start-clever.sh /usr/src/appEntry/start-clever.sh
 
-CMD ["/usr/src/appEntry/start-clever.sh"]
+CMD ["sh", "/usr/src/appEntry/start-clever.sh"]
