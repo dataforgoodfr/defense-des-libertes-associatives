@@ -71,20 +71,20 @@ def ensure_fields(c, spec, tid):
 def ensure_links(c, spec, ids):
     tid = ids[spec["title"]]
     cols = {} if tid == PENDING else {col["title"]: col for col in c.columns(tid)}
-    for l in spec["links"]:
-        target = ids.get(l["to"])
-        col = cols.get(l["title"])
+    for link in spec["links"]:
+        target = ids.get(link["to"])
+        col = cols.get(link["title"])
         if col is None:
-            body = {"title": l["title"], "uidt": "LinkToAnotherRecord",
-                    "parentId": tid, "childId": target, "type": l["type"]}
+            body = {"title": link["title"], "uidt": "LinkToAnotherRecord",
+                    "parentId": tid, "childId": target, "type": link["type"]}
             c.write("POST", f"/api/v2/meta/tables/{tid}/columns", body,
-                    f"add link {spec['title']}.{l['title']} -> {l['to']} [{l['type']}]")
+                    f"add link {spec['title']}.{link['title']} -> {link['to']} [{link['type']}]")
             continue
         opts = col.get("colOptions") or {}
         if col["uidt"] not in LINK_TYPES or opts.get("fk_related_model_id") != target \
-                or opts.get("type") != l["type"]:
-            print(f"  [DRIFT] {spec['title']}.{l['title']}: found {col['uidt']} "
-                  f"[{opts.get('type')}], spec says link -> {l['to']} [{l['type']}]")
+                or opts.get("type") != link["type"]:
+            print(f"  [DRIFT] {spec['title']}.{link['title']}: found {col['uidt']} "
+                  f"[{opts.get('type')}], spec says link -> {link['to']} [{link['type']}]")
 
 
 def ensure_reverses(c, spec, ids):
@@ -93,13 +93,13 @@ def ensure_reverses(c, spec, ids):
     if not spec.get("reverse") or tid == PENDING:
         return
     cols = {col["title"]: col for col in c.columns(tid)}
-    for l in spec["links"]:
-        col = cols.get(l["title"])
-        if col is not None and ids.get(l["to"]) not in (None, PENDING):
-            ensure_reverse(c, l.get("reverse", spec["reverse"]), l, col.get("colOptions") or {}, ids[l["to"]])
+    for link in spec["links"]:
+        col = cols.get(link["title"])
+        if col is not None and ids.get(link["to"]) not in (None, PENDING):
+            ensure_reverse(c, link.get("reverse", spec["reverse"]), link, col.get("colOptions") or {}, ids[link["to"]])
 
 
-def ensure_reverse(c, title, l, opts, target):
+def ensure_reverse(c, title, link, opts, target):
     for col in c.columns(target):
         o = col.get("colOptions") or {}
         if col["uidt"] in LINK_TYPES and col["id"] != opts.get("fk_column_id") \
@@ -109,7 +109,7 @@ def ensure_reverse(c, title, l, opts, target):
             if col["title"] != title:
                 c.write("PATCH", f"/api/v2/meta/columns/{col['id']}",
                         {"title": title, "column_name": title, "uidt": col["uidt"]},
-                        f"rename reverse {l['to']}.{col['title']} -> {title}")
+                        f"rename reverse {link['to']}.{col['title']} -> {title}")
             return
 
 
@@ -127,7 +127,7 @@ def ensure_computed(c, spec, ids):
             continue
         if f["type"] == "Lookup":
             via = cols.get(f["via"])
-            target = next(l["to"] for l in spec["links"] if l["title"] == f["via"])
+            target = next(link["to"] for link in spec["links"] if link["title"] == f["via"])
             if via is None or ids.get(target) in (None, PENDING):
                 print(f"  [plan] add lookup {spec['title']}.{f['title']} once {f['via']} exists")
                 continue
