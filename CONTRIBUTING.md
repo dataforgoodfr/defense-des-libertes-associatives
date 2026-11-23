@@ -34,6 +34,7 @@ Une branche = une issue = une pull request.
 
 - **Titre.** Clair et en français : au merge, il devient le commit sur `main`.
 - **Description.** Ce qui change, pourquoi, comment le vérifier, et `Closes #N` pour fermer l'issue au merge.
+- **Décision.** Une PR qui prend une décision d'architecture ou de produit ajoute son entrée dans [`decisions-architecture/`](decisions-architecture/README.md).
 - **Vérifications.** Ruff relit le code Python et yamllint les workflows ; les deux doivent passer. Pour les lancer avant de pousser, voir la section « Vérifications » du [README](README.md).
 
 ## Relecture et merge
