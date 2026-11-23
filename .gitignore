@@ -161,3 +161,20 @@ cython_debug/
 
 # Precommit hooks: ruff cache
 .ruff_cache
+# Secrets : variantes locales de .env (le modèle .env.example reste versionné)
+.env.*
+!.env.example
+
+# Données : le dépôt est public, aucun cas ni export n'y entre (voir CONTRIBUTING.md).
+# Un fichier à versionner malgré tout (table de correspondance sans données de cas) s'ajoute avec git add -f.
+data/
+*.csv
+*.tsv
+*.xls
+*.xlsx
+*.ods
+*.parquet
+*.sql
+*.dump
+*.db
+*.sqlite

@@ -1,42 +1,42 @@
-# NocoDB schema as code
+# Le schéma NocoDB comme du code
 
-The NocoDB base of the project is described in `schema_v1.py` and brought in line by script, not by hand in the UI. The same scripts rebuild the base from zero on any NocoDB instance (for example the Clever Cloud one deployed from `nocodb/`).
+`schema_v1.py` décrit la base NocoDB du projet, et des scripts l'y conforment, jamais une modification à la main dans l'interface. Les mêmes scripts reconstruisent la base de zéro sur n'importe quelle instance NocoDB (par exemple celle de Clever Cloud déployée depuis `nocodb/`).
 
-| File | Role |
+| Fichier | Rôle |
 |---|---|
-| `schema_v1.py` | Target V1 schema: tables, fields, links, reference values. Edit this file to change the schema |
-| `apply.py` | Creates whatever is missing from the spec. Rerunnable; never deletes or retypes, reports mismatches as `DRIFT` |
-| `seed_communes.py` | Fills `commune` with every commune of the 18 regions from geo.api.gouv.fr (name, INSEE code, department, coordinates, region link). Rerunnable, matched on the INSEE code |
-| `drop.py` | Deletes the reference values and fields taken out of `schema_v1.py`, which `apply.py` never deletes. Rerunnable; refuses to delete a value still linked to a record or a field that still holds data, unless the entry says why. Not needed on an empty base |
-| `client.py` | Small API client shared by the scripts |
+| `schema_v1.py` | Schéma cible de la V1 : tables, champs, liens, valeurs de référence. C'est ce fichier qu'on modifie pour changer le schéma |
+| `apply.py` | Crée tout ce qui manque par rapport à la spécification. Se relance sans risque ; ne supprime jamais rien, ne change jamais un type, et signale les écarts en `DRIFT` |
+| `seed_communes.py` | Remplit `commune` avec toutes les communes des 18 régions depuis geo.api.gouv.fr (nom, code INSEE, département, coordonnées, lien vers la région). Se relance sans risque ; la correspondance se fait sur le code INSEE |
+| `drop.py` | Supprime les valeurs de référence et les champs retirés de `schema_v1.py`, que `apply.py` ne supprime jamais. Se relance sans risque ; refuse de supprimer une valeur encore liée à un enregistrement ou un champ qui contient encore des données, sauf si l'entrée en donne la raison. Inutile sur une base vide |
+| `client.py` | Petit client d'API partagé par les scripts |
 
-## Setup
+## Configuration
 
-An API token (NocoDB: avatar, Account settings, Tokens) and the id of the target base, in `~/.config/d4g/nocodb.env`, outside the repo:
+Un token d'API (dans NocoDB : avatar, « Account settings », « Tokens ») et l'identifiant de la base cible, dans `~/.config/d4g/nocodb.env`, hors du dépôt :
 
 ```
-NOCODB_URL=https://<your NocoDB instance>
+NOCODB_URL=https://<votre instance NocoDB>
 NOCODB_TOKEN=...
 NOCODB_BASE_ID=...
 ```
 
-Optional: `NOCODB_ENV` to read another env file. Needs Python 3 and curl, no other dependency. Never commit the token.
+Facultatif : `NOCODB_ENV` pour lire un autre fichier d'environnement. Les scripts ne demandent que Python 3 et curl, sans autre dépendance. Ne jamais commiter le token.
 
-## Usage
+## Utilisation
 
-Every change to the base goes through these scripts, never through the UI or one-off API calls: the base must be rebuildable from zero. Change `schema_v1.py`, then apply. Always read the dry run before applying.
+Toute modification de la base passe par ces scripts, jamais par l'interface ni par des appels d'API ponctuels : la base doit pouvoir être reconstruite de zéro. Modifier `schema_v1.py`, puis appliquer. Toujours lire le résultat du `--dry-run` avant d'appliquer.
 
-From an empty base:
+À partir d'une base vide :
 
 ```
 python3 nocodb/schema/apply.py --dry-run
 python3 nocodb/schema/apply.py
 python3 nocodb/schema/seed_communes.py --dry-run
-python3 nocodb/schema/seed_communes.py    # about 25 minutes: NocoDB takes 100 rows per request
+python3 nocodb/schema/seed_communes.py    # environ 25 minutes : NocoDB accepte 100 lignes par requête
 ```
 
-`apply.py --dry-run` must then report 0 changes.
+`apply.py --dry-run` doit ensuite annoncer 0 modification.
 
-Both scripts stop at the first API error and can be rerun: finished steps are skipped.
+Les deux scripts s'arrêtent à la première erreur d'API et se relancent sans risque : les étapes terminées sont sautées.
 
-To remove a value or a field: delete it from `schema_v1.py`, add an entry to `drop.py` with the date and the reason, then run `drop.py --dry-run` and `drop.py`.
+Pour retirer une valeur ou un champ : le supprimer de `schema_v1.py`, ajouter dans `drop.py` une entrée avec la date et la raison, puis lancer `drop.py --dry-run` et `drop.py`.
