@@ -10,6 +10,7 @@ Aucun cas, fichier de données (tableurs du SMA ou de l'OLA), export de base, sa
 - Chaque personne crée son propre token NocoDB et le garde dans `~/.config/d4g/nocodb.env` (voir `nocodb/schema/README.md`).
 - Les variables de l'app NocoDB (`NC_AUTH_JWT_SECRET`, `NC_PUBLIC_URL`…) sont définies dans la configuration Clever Cloud, sur le compte du SMA, jamais dans le dépôt.
 - Le dépôt n'a aucun secret GitHub Actions.
+- Accès : le compte Clever Cloud a été créé par le SMA, qui en gère les autorisations ; les deux tech leads et l'OLA y ont accès. Seuls les administrateurs du dépôt (tech leads et Data For Good) peuvent gérer les secrets GitHub Actions.
 
 Si un secret ou une donnée a été poussé par erreur, prévenir tout de suite les tech leads et révoquer le token concerné.
 
