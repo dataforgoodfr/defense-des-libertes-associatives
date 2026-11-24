@@ -1,7 +1,7 @@
 [project]
 name = "defense-des-libertes-associatives"
 version = "0.1.0"
-description = "Déploiement de NocoDB et scripts de schéma pour la base des cas de Défense des libertés associatives"
+description = "Déploiement de NocoDB et scripts de schéma pour la base des cas de Défense des libertés culturelles"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []

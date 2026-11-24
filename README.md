@@ -1,6 +1,6 @@
-# Défense des libertés associatives
+# Défense des libertés culturelles
 
-Base des cas d'entrave aux libertés associatives, avec le SMA. Les bénévoles saisissent et qualifient les cas dans NocoDB ; le futur site public ne montrera que les cas validés.
+Base des atteintes aux libertés culturelles recensées par le SMA et l'OLA, qui saisissent les cas dans NocoDB ; le futur site public ne montrera que les cas validés.
 
 ## Contenu du dépôt
 
