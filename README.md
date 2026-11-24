@@ -18,7 +18,7 @@ Base des atteintes aux libertés culturelles recensées par le SMA et l'OLA, qui
 |---|---|
 | `nocodb/` | Déploiement de NocoDB sur Clever Cloud et environnement local (voir `nocodb/README.md`) |
 | `nocodb/schema/` | Scripts qui créent et font évoluer le schéma de la base (voir `nocodb/schema/README.md`) |
-| `decisions-architecture/` | Journal des décisions d'architecture et de produit (ADR), une par fichier |
+| `decisions-architecture/` | Journal des décisions d'architecture (ADR), une par fichier |
 
 ## Installation
 

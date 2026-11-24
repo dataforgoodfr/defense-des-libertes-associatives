@@ -4,7 +4,7 @@ Ce dossier tient le journal des décisions du projet, sous forme d'ADR (Architec
 
 ## Tenir le journal
 
-- **Quoi consigner.** Une décision coûteuse à défaire ou qui engage d'autres personnes : hébergement, modèle de données, vocabulaire publié, règle de publication. Pas les choix d'implémentation qu'une pull request suffit à expliquer.
+- **Quoi consigner.** Une décision coûteuse à défaire ou qui engage d'autres personnes : hébergement, modèle de données, mécanisme d'export. Pas les choix d'implémentation qu'une pull request suffit à expliquer.
 - **Comment.** Créer un fichier `NNN-titre-court.md` avec le numéro suivant, sur le modèle ci-dessous, puis ajouter sa ligne en bas du tableau. Écrire « non documenté » plutôt que deviner, et citer les issues et pull requests d'où vient l'information.
 - **Quand.** Dans la pull request qui met la décision en œuvre, ou juste après la réunion qui l'a prise.
 - **Réviser.** Une décision ne s'efface jamais. Quand une autre la remplace, passer son statut à « Remplacée par NNN » et ajouter la nouvelle entrée.
