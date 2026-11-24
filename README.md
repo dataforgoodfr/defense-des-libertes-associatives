@@ -2,12 +2,23 @@
 
 Base des atteintes aux libertés culturelles recensées par le SMA et l'OLA, qui saisissent les cas dans NocoDB ; le futur site public ne montrera que les cas validés.
 
+## Liens
+
+- Documentation fonctionnelle : [Outline](https://outline.services.dataforgood.fr/collection/projet-saison-15-defense-des-libertes-culturelles-heYLqfnqYT)
+- Discussions : [canal Mattermost du projet](https://mattermost.services.dataforgood.fr/data-for-good/channels/15-defense-libertes-associatives-onboarding)
+- Backlog : [issues GitHub](https://github.com/dataforgoodfr/defense-des-libertes-associatives/issues)
+
+## Contribuer
+
+[CONTRIBUTING.md](CONTRIBUTING.md) explique comment prendre une issue, nommer sa branche, ouvrir une pull request et la faire relire. Le dépôt est public : aucun cas, fichier de données ni secret n'y entre.
+
 ## Contenu du dépôt
 
 | Dossier | Contenu |
 |---|---|
 | `nocodb/` | Déploiement de NocoDB sur Clever Cloud et environnement local (voir `nocodb/README.md`) |
 | `nocodb/schema/` | Scripts qui créent et font évoluer le schéma de la base (voir `nocodb/schema/README.md`) |
+| `decisions-architecture/` | Journal des décisions d'architecture (ADR), une par fichier |
 
 ## Installation
 
