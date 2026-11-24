@@ -1,42 +1,36 @@
-# Template DataForGood
+# Défense des libertés culturelles
 
-This file will become your README and also the index of your
-documentation.
+Base des atteintes aux libertés culturelles recensées par le SMA et l'OLA, qui saisissent les cas dans NocoDB ; le futur site public ne montrera que les cas validés.
 
-# Contributing
+## Contenu du dépôt
 
+| Dossier | Contenu |
+|---|---|
+| `nocodb/` | Déploiement de NocoDB sur Clever Cloud et environnement local (voir `nocodb/README.md`) |
+| `nocodb/schema/` | Scripts qui créent et font évoluer le schéma de la base (voir `nocodb/schema/README.md`) |
 
 ## Installation
 
-- [Installation de Python](#installation-de-python)
-
-Ce projet utilise [uv](https://docs.astral.sh/uv/) pour la gestion des dépendances Python. Il est préréquis pour l'installation de ce projet.
-
-Une fois installé, il suffit de lancer la commande suivante pour installer la version de Python adéquate, créer un environnement virtuel et installer les dépendances du projet.
+Les scripts n'utilisent que la bibliothèque standard de Python (3.12 ou plus) et curl. [uv](https://docs.astral.sh/uv/) installe la bonne version de Python :
 
 ```bash
 uv sync
+uv run nocodb/schema/apply.py --dry-run
 ```
 
-A l'usage, si vous utilisez VSCode, l'environnement virtuel sera automatiquement activé lorsque vous ouvrirez le projet. Sinon, il suffit de l'activer manuellement avec la commande suivante :
+Les scripts de schéma lisent l'adresse de l'instance NocoDB, un token d'API et l'identifiant de la base dans `~/.config/d4g/nocodb.env`, hors du dépôt ; `nocodb/schema/README.md` détaille ce fichier.
+
+## Vérifications
+
+Une pull request qui modifie du code Python passe par Ruff ; une pull request qui modifie les workflows passe par yamllint. Pour lancer les mêmes vérifications en local :
 
 ```bash
-source .venv/bin/activate
+uvx ruff check .
+uvx yamllint .github/workflows/
 ```
 
-Ou alors, utilisez la commande `uv run ...` (au lieu de `python ...`) pour lancer un script Python. Par exemple:
+Pour que Ruff corrige le code à chaque commit, installer les hooks [pre-commit](https://pre-commit.com/) une fois :
 
 ```bash
-uv run pipelines/run.py run build_database
+uvx pre-commit install
 ```
-
-
-## Lancer les precommit-hook localement
-
-[Installer les precommit](https://pre-commit.com/)
-
-    pre-commit run --all-files
-
-## Utiliser Tox pour tester votre code
-
-    tox -vv
