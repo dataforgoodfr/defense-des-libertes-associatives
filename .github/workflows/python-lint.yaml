@@ -1,11 +1,11 @@
 ---
-name: Python format check
+name: Python lint
 on:  # yamllint disable-line rule:truthy
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - "**/*.py"
-      - ".github/workflows/python-format.yaml"
+      - ".github/workflows/python-lint.yaml"
 
 concurrency:
   # Skip intermediate builds: always.
